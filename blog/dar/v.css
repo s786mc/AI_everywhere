@@ -1,0 +1,238 @@
+/* Reset و تنظیمات پایه */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* هدر و ناوبری */
+header {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    color: white;
+    padding: 1.5rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 2.2rem;
+    color: #4fc3f7;
+}
+
+.logo h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.date {
+    color: #e3f2fd;
+    font-size: 0.95rem;
+}
+
+.tagline {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border-right: 4px solid #4fc3f7;
+}
+
+/* محتوای اصلی */
+main {
+    padding: 2rem 0;
+}
+
+.intro-section {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.8rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-right: 5px solid #3949ab;
+}
+
+.intro-section h2 {
+    color: #1a237e;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.intro-section h2 i {
+    color: #3949ab;
+}
+
+.intro-text {
+    color: #555;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* بخش اخبار */
+.news-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .news-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .news-section {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.news-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    padding: 1.2rem 1.5rem 0.8rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.category {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #1a237e;
+}
+
+.category-icon {
+    font-size: 1.2rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-body h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+}
+
+.card-body p {
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+.source {
+    color: #666;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 1rem;
+}
+
+/* فوتو */
+footer {
+    background-color: #1a237e;
+    color: white;
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #4fc3f7;
+}
+
+/* افکت‌های ویژه */
+.highlight {
+    background-color: #e8eaf6;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #bbb, transparent);
+    margin: 1.5rem 0;
+}
+
+.news-summary {
+    background-color: #f3f4f9;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border-right: 3px solid #3949ab;
+}
+
+/* استایل‌های اضافی برای نمایش بهتر */
+.news-summary p {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+/* استایل برای آیتم‌های درون کارت‌ها */
+.news-summary i {
+    margin-left: 8px;
+}
