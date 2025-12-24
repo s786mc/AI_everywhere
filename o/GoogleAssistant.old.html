@@ -10,9 +10,68 @@
       height: 40px;
       width: 40px;
     }
-.en { color: blue; }
-.fa { color: skyblue; }
-.mo { color: #666; }
+.gemini-page .en { color: blue; }
+.gemini-page .fa { color: skyblue; }
+.gemini-page .mo { color: #666; }
+        .he {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.25);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            min-width: 220px;
+            text-decoration: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .he:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .he:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(52, 152, 219, 0.35);
+        }
+        
+        .he:hover:before {
+            opacity: 1;
+        }
+        
+        .he:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .he i {
+            margin-left: 10px;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .he:hover i {
+            transform: rotate(15deg);
+        }
+
   </style>
 </head>
 <body class="gemini-page">
@@ -30,7 +89,7 @@
     <div class="ai-description">
       <h2>Google Assistant OLD</h2>
 <div class="ai-description">
-  <img src="../../f/img/oldass.png" alt="Nano Banana Preview" style="width: 100%; max-width: 600px; border-radius: 12px; margin-bottom: 1.5rem;" />
+  <img src="../../f/img/oldass.png" alt="عکس از گوگول اسستنت قدیم،" style="width: 100%; max-width: 600px; border-radius: 12px; margin-bottom: 1.5rem;" />
 
   <h2>دستیار قدیمی گوگل || نگاهی به ورژن قدیمی گوگل اسستنت</h2>
   <p>
@@ -40,8 +99,8 @@
 
 <div class="gemini-page" style=" border-color: skyblue; border-radius: 30px; border-width: 3px; ">
 <h4> فهرست مطالب: </h4><br>
-<a href="#khat-zamani" class="ai-description">شروع و خط زمانی </a><br> 
-<a href="#ca" class="ai-description"> چه چیزایی میتونستیم بهش بگیم؟</a><br><a href="#filter" class="ai-description"> آیا فیلتره؟ </a>
+<a href="#khat-zamani" class="he">شروع و خط زمانی </a><br> 
+<a href="#ca" class="he"> چه چیزایی میتونستیم بهش بگیم؟</a><br><a href="#filter" class="he"> آیا فیلتره؟ </a>
 </div><br>
 <br><br><br><br><br><br><br>
 <p id="khat-zamani">
@@ -61,13 +120,15 @@
 <br><br><br> و میرسیم به سال ۲۰۲۴ که گوگل جمنای را  داخل اسستنت استفاده کرد و تبدیل به چیزی که الان می‌بینیم شد <br><br><br><br><br><br>
 <div id="filter"><h2>آیا در ایران فیلتره؟ </h4>
 <p> بله متاسفانه،  جمنای و گوگل اسستنت داخل ایران فیلتر هستند و میتوانید به جایگزین هایی نظیر کوپایلت(Copilot) مراجعه کنید. </p></div>
+<br> گوگل از نسخه قبلی قطع امید و دیگر آن را در پلی‌استور پیدا نخواهید کرد 
       </p>
 
 
       <div class="ai-card-footer" style="margin-top: 2rem; padding: 0;">
-        <a href="https://banana-ai.org/fa" class="ai-link" target="_blank">
-         نصب گوگل دستیار قدیمی || Google Assistant
+        <a href="‏«http://cafebazaar.ir/app/?id=com.google.android.apps.googleassistant&ref=share" class="ai-link" target="_blank">
+         نصب گوگل دستیار قدیمی بازار|| Google Assistant
         </a>
+<br> <a href="https://myket.ir/app/com.google.android.apps.googleassistant" class="ai-link" target="_blank">  نصب گوگل دستیار قدیمی مایکت || Google Assistant </a>
       </div>
     </div>
   </div>
