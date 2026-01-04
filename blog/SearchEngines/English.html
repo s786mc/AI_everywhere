@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Engines</title>
+    <link rel="stylesheet" href="https://s786mc.github.io/AI_everywhere/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Search Engines Page Styles */
+        .search-engines-page {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+        }
+
+        .search-engines-page .navbar {
+            background-color: rgba(245, 247, 250, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .search-engines-page .logo {
+            color: #1a73e8;
+            font-size: 1.5rem;
+        }
+
+        .search-engines-page .nav-links a {
+            color: #5f6368;
+        }
+
+        .search-engines-page .nav-links a:hover {
+            color: #1a73e8;
+            background-color: rgba(26, 115, 232, 0.05);
+        }
+
+        /* Header */
+        .search-header {
+            text-align: center;
+            padding: 3rem 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(90deg, #1a73e8 0%, #34a853 50%, #fbbc04 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .search-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Grid */
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem 0 4rem;
+        }
+
+        /* Card */
+        .search-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: all var(--transition-speed);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border-top: 4px solid transparent;
+            animation: cardEntrance 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .search-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .search-card-header {
+            padding: 1.8rem 1.8rem 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .search-icon-container {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease;
+        }
+
+        .search-card:hover .search-icon-container {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .search-card-title h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+
+        .year {
+            font-size: 0.9rem;
+            color: #666;
+            background-color: #f1f3f4;
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .search-card-content {
+            padding: 0 1.8rem 1.5rem;
+            flex-grow: 1;
+        }
+
+        .search-card-content p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .feature-tag {
+            background-color: #f8f9fa;
+            color: #5f6368;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid #e8eaed;
+        }
+
+        .search-card-footer {
+            padding: 0 1.8rem 1.8rem;
+            margin-top: auto;
+        }
+
+        .search-link {
+            display: block;
+            padding: 12px 24px;
+            border-radius: var(--border-radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            color: white;
+        }
+
+        /* Color themes */
+        .google-card { border-top-color: #4285f4; }
+        .google-icon { background: linear-gradient(135deg, #4285f4, #34a853, #fbbc04, #ea4335); }
+        .google-link { background: linear-gradient(90deg, #4285f4, #34a853); }
+
+        .bing-card { border-top-color: #008373; }
+        .bing-icon { background: linear-gradient(135deg, #008373, #00a4ef); }
+        .bing-link { background: linear-gradient(90deg, #008373, #00a4ef); }
+
+        .yahoo-card { border-top-color: #6001d2; }
+        .yahoo-icon { background: linear-gradient(135deg, #6001d2, #7b0099); }
+        .yahoo-link { background: linear-gradient(90deg, #6001d2, #7b0099); }
+
+        .duckduckgo-card { border-top-color: #de5833; }
+        .duckduckgo-icon { background: linear-gradient(135deg, #de5833, #e9c46a); }
+        .duckduckgo-link { background: linear-gradient(90deg, #de5833, #e9c46a); color: #333; }
+
+        .yandex-card { border-top-color: #ff0000; }
+        .yandex-icon { background: linear-gradient(135deg, #ff0000, #ffcc00); }
+        .yandex-link { background: linear-gradient(90deg, #ff0000, #ffcc00); color: #333; }
+
+        .baidu-card { border-top-color: #2319dc; }
+        .baidu-icon { background: linear-gradient(135deg, #2319dc, #4e6cf7); }
+        .baidu-link { background: linear-gradient(90deg, #2319dc, #4e6cf7); }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
+</head>
+
+<body class="search-engines-page">
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <i class="fas fa-search"></i>
+            <span>Search Engines</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#sr">Engines</a></li>
+            <li><a href="#">Comparison</a></li>
+            <li><a href="../index">Home</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="search-header">
+        <h1>Top Search Engines in the World</h1>
+        <p>
+            An introduction and comparison of the best search engines on the internet.
+            Each search engine has unique features and advantages designed for different user needs.
+        </p>
+    </div>
+
+    <div class="search-grid" id="sr">
+
+        <!-- Google -->
+        <div class="search-card google-card">
+            <div class="search-card-header">
+                <div class="search-icon-container google-icon">
+                    <img src="./Google.png" alt="Google Logo" width="35">
+                </div>
+                <div>
+                    <h3>Google</h3>
+                    <span class="year">Founded: 1998</span>
+                </div>
+            </div>
+            <div class="search-card-content">
+                <p>
+                    Google is the most powerful search engine in the world with over 90% market share.
+                    Its advanced algorithms understand user intent and deliver highly accurate results.
+                </p>
+                <div class="search-features">
+                    <span class="feature-tag">Advanced Search</span>
+                    <span class="feature-tag">Image Search</span>
+                    <span class="feature-tag">Voice Search</span>
+                    <span class="feature-tag">Maps</span>
+                </div>
+            </div>
+            <div class="search-card-footer">
+                <a href="https://www.google.com" target="_blank" class="search-link google-link">
+                    Visit Search Engine <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Bing -->
+        <div class="search-card bing-card">
+            <div class="search-card-header">
+                <div class="search-icon-container bing-icon">
+                    <img src="./Bing.png" alt="Bing Logo" width="35">
+                </div>
+                <div>
+                    <h3>Bing</h3>
+                    <span class="year">Founded: 2009</span>
+                </div>
+            </div>
+            <div class="search-card-content">
+                <p>
+                    Microsoft’s search engine powered by AI, featuring beautiful daily backgrounds
+                    and deep integration with Microsoft services.
+                </p>
+                <div class="search-features">
+                    <span class="feature-tag">Video Preview</span>
+                    <span class="feature-tag">4K Images</span>
+                    <span class="feature-tag">Windows Integration</span>
+                    <span class="feature-tag">3D Search</span>
+                </div>
+            </div>
+            <div class="search-card-footer">
+                <a href="https://www.bing.com" target="_blank" class="search-link bing-link">
+                    Visit Search Engine <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- DuckDuckGo -->
+        <div class="search-card duckduckgo-card">
+            <div class="search-card-header">
+                <div class="search-icon-container duckduckgo-icon">
+                    <img src="./DuckDuckGo.png" alt="DuckDuckGo Logo" width="40">
+                </div>
+                <div>
+                    <h3>DuckDuckGo</h3>
+                    <span class="year">Founded: 2008</span>
+                </div>
+            </div>
+            <div class="search-card-content">
+                <p>
+                    A privacy-focused search engine that does not track or store user data
+                    and does not show personalized ads.
+                </p>
+                <div class="search-features">
+                    <span class="feature-tag">Privacy</span>
+                    <span class="feature-tag">No Tracking</span>
+                    <span class="feature-tag">Secure Search</span>
+                    <span class="feature-tag">No Personalized Ads</span>
+                </div>
+            </div>
+            <div class="search-card-footer">
+                <a href="https://duckduckgo.com" target="_blank" class="search-link duckduckgo-link">
+                    Visit Search Engine <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer class="footer search-footer">
+    <div class="copyright-dual">
+        <span>© 1404 – 2026</span>
+        <span>All Rights Reserved</span>
+        <span><i>Copyright AI Everywhere 2026</i></span>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.search-card').forEach(card => {
+            card.addEventListener('mouseenter', () => card.style.zIndex = '10');
+            card.addEventListener('mouseleave', () => card.style.zIndex = '1');
+        });
+    });
+</script>
+
+</body>
+</html>
