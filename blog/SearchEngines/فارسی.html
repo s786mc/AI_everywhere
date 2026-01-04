@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موتورهای جستجو - Search Engines</title>
+    <link rel="stylesheet" href="../all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* استایل‌های اختصاصی صفحه موتورهای جستجو */
+        .search-engines-page {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+        }
+        
+        .search-engines-page .navbar {
+            background-color: rgba(245, 247, 250, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .search-engines-page .logo {
+            color: #1a73e8;
+            font-size: 1.5rem;
+        }
+        
+        .search-engines-page .nav-links a {
+            color: #5f6368;
+        }
+        
+        .search-engines-page .nav-links a:hover {
+            color: #1a73e8;
+            background-color: rgba(26, 115, 232, 0.05);
+        }
+        
+        /* صفحه‌بندی هدر */
+        .search-header {
+            text-align: center;
+            padding: 3rem 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .search-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(90deg, #1a73e8 0%, #34a853 50%, #fbbc04 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .search-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* گرید کارت‌های موتور جستجو */
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem 0 4rem;
+        }
+        
+        /* کارت موتور جستجو */
+        .search-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: all var(--transition-speed);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border-top: 4px solid transparent;
+        }
+        
+        .search-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-heavy);
+        }
+        
+        .search-card-header {
+            padding: 1.8rem 1.8rem 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        
+        .search-icon-container {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease;
+        }
+        
+        .search-card:hover .search-icon-container {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .search-card-title {
+            flex-grow: 1;
+        }
+        
+        .search-card-title h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+        
+        .search-card-title .year {
+            font-size: 0.9rem;
+            color: #666;
+            background-color: #f1f3f4;
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .search-card-content {
+            padding: 0 1.8rem 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .search-card-content p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .feature-tag {
+            background-color: #f8f9fa;
+            color: #5f6368;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid #e8eaed;
+        }
+        
+        .search-card-footer {
+            padding: 0 1.8rem 1.8rem;
+            margin-top: auto;
+        }
+        
+        .search-link {
+            display: block;
+            padding: 12px 24px;
+            border-radius: var(--border-radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all var(--transition-speed);
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .search-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+        
+        .search-link:hover::before {
+            width: 100%;
+        }
+        
+        .search-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .search-link i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .search-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* رنگ‌بندی اختصاصی برای هر موتور جستجو */
+        /* Google */
+        .google-card {
+            border-top-color: #4285f4;
+        }
+        
+        .google-icon {
+            background: linear-gradient(135deg, #4285f4, #34a853, #fbbc04, #ea4335);
+        }
+        
+        .google-link {
+            background: linear-gradient(90deg, #4285f4, #34a853);
+        }
+        
+        /* Bing */
+        .bing-card {
+            border-top-color: #008373;
+        }
+        
+        .bing-icon {
+            background: linear-gradient(135deg, #008373, #00a4ef);
+        }
+        
+        .bing-link {
+            background: linear-gradient(90deg, #008373, #00a4ef);
+        }
+        
+        /* Yahoo */
+        .yahoo-card {
+            border-top-color: #6001d2;
+        }
+        
+        .yahoo-icon {
+            background: linear-gradient(135deg, #6001d2, #7b0099);
+        }
+        
+        .yahoo-link {
+            background: linear-gradient(90deg, #6001d2, #7b0099);
+        }
+        
+        /* DuckDuckGo */
+        .duckduckgo-card {
+            border-top-color: #de5833;
+        }
+        
+        .duckduckgo-icon {
+            background: linear-gradient(135deg, #de5833, #e9c46a);
+        }
+        
+        .duckduckgo-link {
+            background: linear-gradient(90deg, #de5833, #e9c46a);
+            color: #333;
+        }
+        
+        /* Yandex */
+        .yandex-card {
+            border-top-color: #ff0000;
+        }
+        
+        .yandex-icon {
+            background: linear-gradient(135deg, #ff0000, #ffcc00);
+        }
+        
+        .yandex-link {
+            background: linear-gradient(90deg, #ff0000, #ffcc00);
+            color: #333;
+        }
+        
+        /* Baidu */
+        .baidu-card {
+            border-top-color: #2319dc;
+        }
+        
+        .baidu-icon {
+            background: linear-gradient(135deg, #2319dc, #4e6cf7);
+        }
+        
+        .baidu-link {
+            background: linear-gradient(90deg, #2319dc, #4e6cf7);
+        }
+        
+        /* فوتر صفحه */
+        .search-footer {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem 0 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .copyright-dual {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 1.5rem;
+            direction: ltr;
+        }
+        
+        .copyright-dual span {
+            margin: 0 10px;
+        }
+        
+        /* انیمیشن‌ها */
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .search-card {
+            animation: cardEntrance 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .search-card:nth-child(1) { animation-delay: 0.1s; }
+        .search-card:nth-child(2) { animation-delay: 0.2s; }
+        .search-card:nth-child(3) { animation-delay: 0.3s; }
+        .search-card:nth-child(4) { animation-delay: 0.4s; }
+        .search-card:nth-child(5) { animation-delay: 0.5s; }
+        .search-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* رسپانسیو */
+        @media (max-width: 768px) {
+            .search-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1.5rem 0 3rem;
+            }
+            
+            .search-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .search-card-header {
+                padding: 1.5rem 1.5rem 0.5rem;
+            }
+            
+            .search-icon-container {
+                width: 60px;
+                height: 60px;
+                font-size: 1.6rem;
+            }
+        }
+        
+        /* افکت‌های اضافی */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(26, 115, 232, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); }
+        }
+    </style>
+</head>
+<body class="search-engines-page">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">
+                    <i class="fas fa-search"></i>
+                </span>
+                <span>موتورهای جستجو</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">صفحه اصلی</a></li>
+                <li><a href="#">مقایسه</a></li>
+                <li><a href="#">امنیت</a></li>
+                <li><a href="#">راهنما</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="search-header">
+            <h1>موتورهای جستجوی برتر جهان</h1>
+            <p>معرفی و مقایسه بهترین موتورهای جستجو در اینترنت. هر موتور جستجو ویژگی‌های منحصر به فرد و مزایای خاص خود را دارد که متناسب با نیازهای مختلف کاربران طراحی شده‌اند.</p>
+        </div>
+
+        <div class="search-grid">
+            <!-- Google -->
+            <div class="search-card google-card">
+                <div class="search-card-header">
+                    <div class="search-icon-container google-icon pulse">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/768px-Google_%22G%22_Logo.svg.png" alt="Google Logo" style="width: 35px; height: 35px;">
+                    </div>
+                    <div class="search-card-title">
+                        <h3>گوگل</h3>
+                        <span class="year">تاسیس: ۱۹۹۸</span>
+                    </div>
+                </div>
+                <div class="search-card-content">
+                    <p>گوگل قدرتمندترین موتور جستجوی جهان با بیش از ۹۰٪ سهم بازار است. الگوریتم‌های پیچیده آن قادر به درک intent کاربر و ارائه دقیق‌ترین نتایج هستند.</p>
+                    <div class="search-features">
+                        <span class="feature-tag">جستجوی پیشرفته</span>
+                        <span class="feature-tag">جستجوی تصویری</span>
+                        <span class="feature-tag">جستجوی صوتی</span>
+                        <span class="feature-tag">نقشه‌ها</span>
+                    </div>
+                </div>
+                <div class="search-card-footer">
+                    <a href="https://www.google.com" class="search-link google-link" target="_blank">
+                        ورود به موتور جستجو <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bing -->
+            <div class="search-card bing-card">
+                <div class="search-card-header">
+                    <div class="search-icon-container bing-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bing_logo.svg/480px-Bing_logo.svg.png" alt="Bing Logo" style="width: 35px; height: 35px;">
+                    </div>
+                    <div class="search-card-title">
+                        <h3>بینگ</h3>
+                        <span class="year">تاسیس: ۲۰۰۹</span>
+                    </div>
+                </div>
+                <div class="search-card-content">
+                    <p>موتور جستجوی مایکروسافت با پشتیبانی از هوش مصنوعی، تصاویر پس‌زمینه زیبا و ادغام با خدمات مایکروسافت. دارای قابلیت‌های جستجوی ویدیویی قوی است.</p>
+                    <div class="search-features">
+                        <span class="feature-tag">پیش‌نمایش ویدیو</span>
+                        <span class="feature-tag">تصاویر ۴K</span>
+                        <span class="feature-tag">ادغام با ویندوز</span>
+                        <span class="feature-tag">جستجوی سه‌بعدی</span>
+                    </div>
+                </div>
+                <div class="search-card-footer">
+                    <a href="https://www.bing.com" class="search-link bing-link" target="_blank">
+                        ورود به موتور جستجو <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Yahoo -->
+            <div class="search-card yahoo-card">
+                <div class="search-card-header">
+                    <div class="search-icon-container yahoo-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Yahoo%21_logo.svg/640px-Yahoo%21_logo.svg.png" alt="Yahoo Logo" style="width: 40px; height: 40px;">
+                    </div>
+                    <div class="search-card-title">
+                        <h3>یاهو</h3>
+                        <span class="year">تاسیس: ۱۹۹۴</span>
+                    </div>
+                </div>
+                <div class="search-card-content">
+                    <p>یکی از قدیمی‌ترین موتورهای جستجو که هم‌اکنون توسط موتور بینگ پشتیبانی می‌شود. پورتال جامعی است که علاوه بر جستجو، خدمات ایمیل، اخبار و سرگرمی ارائه می‌دهد.</p>
+                    <div class="search-features">
+                        <span class="feature-tag">ایمیل رایگان</span>
+                        <span class="feature-tag">اخبار</span>
+                        <span class="feature-tag">سرگرمی</span>
+                        <span class="feature-tag">مالی</span>
+                    </div>
+                </div>
+                <div class="search-card-footer">
+                    <a href="https://www.yahoo.com" class="search-link yahoo-link" target="_blank">
+                        ورود به موتور جستجو <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- DuckDuckGo -->
+            <div class="search-card duckduckgo-card">
+                <div class="search-card-header">
+                    <div class="search-icon-container duckduckgo-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/84/DuckDuckGo_logo.svg/600px-DuckDuckGo_logo.svg.png" alt="DuckDuckGo Logo" style="width: 40px; height: 40px;">
+                    </div>
+                    <div class="search-card-title">
+                        <h3>داک‌داک‌گو</h3>
+                        <span class="year">تاسیس: ۲۰۰۸</span>
+                    </div>
+                </div>
+                <div class="search-card-content">
+                    <p>موتور جستجوی خصوصی‌محور که اطلاعات کاربران را ذخیره نمی‌کند. برخلاف گوگل، رهگیری کاربر و نمایش تبلیغات مبتنی بر تاریخچه جستجو را انجام نمی‌دهد.</p>
+                    <div class="search-features">
+                        <span class="feature-tag">حریم خصوصی</span>
+                        <span class="feature-tag">بدون رهگیری</span>
+                        <span class="feature-tag">جستجوی امن</span>
+                        <span class="feature-tag">بدون تبلیغات شخصی‌سازی شده</span>
+                    </div>
+                </div>
+                <div class="search-card-footer">
+                    <a href="https://duckduckgo.com" class="search-link duckduckgo-link" target="_blank">
+                        ورود به موتور جستجو <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Yandex -->
+            <div class="search-card yandex-card">
+                <div class="search-card-header">
+                    <div class="search-icon-container yandex-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Yandex_logo_en.svg/600px-Yandex_logo_en.svg.png" alt="Yandex Logo" style="width: 40px; height: 40px;">
+                    </div>
+                    <div class="search-card-title">
+                        <h3>یاندکس</h3>
+                        <span class="year">تاسیس: ۱۹۹۷</span>
+                    </div>
+                </div>
+                <div class="search-card-content">
+                    <p>موتور جستجوی برتر روسیه و برخی کشورهای مشترک‌المنافع. این موتور جستجو برای زبان روسی و جستجوی در سایت‌های روسی بهینه‌سازی شده است.</p>
+                    <div class="search-features">
+                        <span class="feature-tag">بهینه برای روسی</span>
+                        <span class="feature-tag">نقشه‌های محلی</span>
+                        <span class="feature-tag">ترجمه</span>
+                        <span class="feature-tag">پرداخت آنلاین</span>
+                    </div>
+                </div>
+                <div class="search-card-footer">
+                    <a href="https://yandex.com" class="search-link yandex-link" target="_blank">
+                        ورود به موتور جستجو <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Baidu -->
+            <div class="search-card baidu-card">
+                <div class="search-card-header">
+                    <div class="search-icon-container baidu-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Baidu_logo.svg/600px-Baidu_logo.svg.png" alt="Baidu Logo" style="width: 40px; height: 40px;">
+                    </div>
+                    <div class="search-card-title">
+                        <h3>بایدو</h3>
+                        <span class="year">تاسیس: ۲۰۰۰</span>
+                    </div>
+                </div>
+                <div class="search-card-content">
+                    <p>موتور جستجوی برتر چین با بیش از ۷۰٪ سهم بازار در این کشور. بایدو به زبان چینی و جستجو در محتوای چینی تخصص دارد و خدمات متنوعی ارائه می‌دهد.</p>
+                    <div class="search-features">
+                        <span class="feature-tag">بهینه برای چینی</span>
+                        <span class="feature-tag">دانلود موسیقی</span>
+                        <span class="feature-tag">دانلود ویدیو</span>
+                        <span class="feature-tag">ویکی چینی</span>
+                    </div>
+                </div>
+                <div class="search-card-footer">
+                    <a href="https://www.baidu.com" class="search-link baidu-link" target="_blank">
+                        ورود به موتور جستجو <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer search-footer">
+        <div class="footer-content">
+            <ul class="footer-links">
+                <li><a href="#">درباره ما</a></li>
+                <li><a href="#">تماس با ما</a></li>
+                <li><a href="#">حریم خصوصی</a></li>
+                <li><a href="#">قوانین استفاده</a></li>
+            </ul>
+            <div class="copyright-dual">
+                <span>© 1404 - 2026</span>
+                <span>تمامی حقوق محفوظ است</span>
+                <span>| طراحی شده با <i class="fas fa-heart" style="color: #e74c3c;"></i></span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // افزودن افکت‌های تعاملی کوچک
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.search-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+            
+            // ایجاد افکت پالس برای آی‌کان گوگل
+            const googleIcon = document.querySelector('.google-icon');
+            setInterval(() => {
+                googleIcon.classList.toggle('pulse');
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
