@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Everywhere - معرفی ترجمه‌گرها</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #D4A574;
+            --secondary-color: #8B7355;
+            --light-cream: #FAF3E0;
+            --medium-cream: #F5E6CA;
+            --dark-cream: #E8D9B5;
+            --text-dark: #333333;
+            --text-light: #5A5A5A;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background-color: var(--light-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-top: 80px; /* برای هدر فیکس شده */
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            animation: subtle-shake 3s infinite;
+        }
+        
+        @keyframes subtle-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--medium-cream);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .hero h2 {
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        /* استایل دکمه برایم بخوان */
+.read-aloud-btn {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#readBtn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+#readBtn:hover {
+    background-color: #7a6143;
+    transform: scale(1.05);
+}
+
+#readBtn.playing {
+    background-color: #2B7A78;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(43, 122, 120, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(43, 122, 120, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(43, 122, 120, 0); }
+}
+
+/* برای حالت موبایل */
+@media (max-width: 768px) {
+    .read-aloud-btn {
+        position: static;
+        transform: none;
+        margin-top: 10px;
+    }
+    
+    #readBtn {
+        margin: 0 auto;
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
+        /* Section Styles */
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--dark-cream);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 100px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        /* Translator Cards */
+        .translators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .translator-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--primary-color);
+        }
+        
+        .translator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 20px;
+            background-color: var(--dark-cream);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            flex: 1;
+        }
+        
+        .card-title h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+        
+        .card-title .category {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+      .qu {
+        font-size: 0.9rem;
+            color: var(--text-light);
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+      }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-content p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .card-link {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .card-link:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .card-link i {
+            margin-right: 8px;
+        }
+        
+        .iranian-card {
+            border-top-color: #2B7A78;
+        }
+        
+        .iranian-card .card-header {
+            background-color: #DEF2F1;
+        }
+        
+        .iranian-card .card-icon {
+            color: #2B7A78;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .translators-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .logo i {
+                font-size: 1.7rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <header>
+    <div class="header-content">
+        
+        
+        <div class="logo">
+            <i class="fas fa-robot"></i>
+            <span>AI Everywhere</span>
+
+              
+        </div>
+    </div>
+</header> <br><br>
+  <div class="qu" style="
+    
+    display=""><strong style="text-align: right;">شما اینجا هستید:</strong> <div dir="ltr">   AI Everywhere / blog / Translators </div>
+  <div class="read-aloud-btn">
+            <button id="readBtn">
+                <i class="fas fa-volume-up"></i>
+                برایم بخوان
+            </button>
+            <audio id="audioPlayer" src="https://server-website.github.io/the_web/file/read-tra.mp3"></audio>
+  </div>
+  </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2>●بهترین مترجم‌های اینترنت</h2>
+            <p>در این وبسایت با بهترین و قدرتمندترین مترجم‌های هوش مصنوعی داخلی و خارجی آشنا می‌شوید. ابزارهایی که مرزهای زبانی را کمرنگ کرده‌اند.</p>
+        </section>
+
+        <!-- International Translators -->
+        <h2 class="section-title">مترجم‌های بین‌المللی</h2>
+        <div class="translators-grid">
+            <!-- Microsoft Translator -->
+            <div class="translator-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fab fa-microsoft"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>Microsoft Translator</h3>
+                        <span class="category">بین‌المللی</span>
+                      <span class="category">پشتیبانی کامل از فارسی</span> <span class="category">بینگ</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>مترجم مایکروسافت با پشتیبانی از بیش از ۱۰۰ زبان، ابزاری قدرتمند برای ترجمه متون، اسناد و گفتار است. این سرویس از طریق API قابل ادغام با برنامه‌های دیگر نیز می‌باشد.</p>
+                    <a href="https://www.bing.com/translator" target="_blank" class="card-link">
+                        <i class="fas fa-external-link-alt"></i> مشاهده وبسایت
+                    </a>
+                </div>
+            </div>
+
+            <!-- Google Translate -->
+            <div class="translator-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>Google Translate</h3>
+                        <span class="category">بین‌المللی</span> <span class="category">گوگل</span> <span class="category">محبوب‌در میان مردم</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>گوگل ترنسلیت ، سرویس ترجمه آنلاین با پشتیبانی از ۱۳۳ زبان است. این ابزار قابلیت ترجمه متن، وبسایت، تصویر و گفتار را به صورت بلادرنگ دارد.این ترجمه.گر  آنلاین به دلیل ادغام با گوگل سرویس محبوب‌ترین در میان مردم‌ می‌باشد.</p>
+                    <a href="https://translate.google.com" target="_blank" class="card-link">
+                        <i class="fas fa-external-link-alt"></i> مشاهده وبسایت
+                    </a>
+                </div>
+            </div>
+
+            <!-- DeepL -->
+            <div class="translator-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>DeepL Translator</h3>
+                        <span class="category">بین‌المللی</span> <span class="category">عمیق</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>دیپ‌ال به عنوان دقیق‌ترین مترجم هوش مصنوعی شناخته می‌شود. این سرویس با استفاده از شبکه‌های عصبی عمیق، ترجمه‌هایی با کیفیت نزدیک به انسان ارائه می‌دهد.</p>
+                    <a href="https://www.deepl.com/en/translator" target="_blank" class="card-link">
+                        <i class="fas fa-external-link-alt"></i> مشاهده وبسایت
+                    </a>
+                </div>
+            </div>
+
+            <!-- ChatGPT Translate -->
+            <div class="translator-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>ChatGPT Translate</h3>
+                        <span class="category">بین‌المللی</span> <span class="category">کمتر محبوب</span> <span class="category">پشتیبانی‌نکردن از پارسی</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>ترجمه ChatGPT با درک عمیق از محتوا و زمینه، ترجمه‌هایی دقیق و طبیعی ارائه می‌دهد. این ابزار توانایی ترجمه متون تخصصی و حفظ لحن اصلی را دارد.<br>
+                   این مترجم تنها از ۴۰ زبان فعلا پشتیبانی  میکند و متاسفانه پارسی میان آنها نیست.</p>
+                    <a href="https://chatgpt.com/translate" target="_blank" class="card-link">
+                        <i class="fas fa-external-link-alt"></i> مشاهده وبسایت
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Iranian Translators -->
+        <h2 class="section-title">مترجم‌های ایرانی</h2>
+        <div class="translators-grid">
+            <!-- Faraazin -->
+            <div class="translator-card iranian-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>فرازین</h3>
+                        <span class="category">ایرانی</span> <span class="category">اینترنت‌ملی</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>فرازین یک سرویس ترجمه هوش مصنوعی ایرانی است که با تمرکز بر زبان فارسی و نیازهای کاربران ایرانی توسعه یافته است. این پلتفرم ترجمه‌های  روان ارائه می‌دهد.
+                   برخی ترجمه ها دقیق نیستند. </p>
+                    <a href="http://www.faraazin.ir" target="_blank" class="card-link">
+                        <i class="fas fa-external-link-alt"></i> مشاهده وبسایت
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">
+            <i class="fas fa-robot"></i> AI Everywhere
+        </div>
+        <p>مرجعی برای معرفی بهترین ابزارهای ترجمه هوش مصنوعی</p>
+        <p>© 2025/1404 کلیه حقوق محفوظ است</p>
+    </footer>
+
+    <script>
+        // افزودن قابلیت اسکرول نرم برای لینک‌ها
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // افزودن انیمیشن به کارت‌ها هنگام اسکرول
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // تنظیم اولیه کارت‌ها برای انیمیشن
+        document.querySelectorAll('.translator-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+// کنترل پخش فایل صوتی
+const readBtn = document.getElementById('readBtn');
+const audioPlayer = document.getElementById('audioPlayer');
+
+readBtn.addEventListener('click', function() {
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+        readBtn.classList.add('playing');
+        readBtn.innerHTML = '<i class="fas fa-pause"></i>توقف';
+    } else {
+        audioPlayer.pause();
+        readBtn.classList.remove('playing');
+        readBtn.innerHTML = '<i class="fas fa-volume-up"></i> برایم بخوان';
+    }
+});
+
+// وقتی فایل تمام شد
+audioPlayer.addEventListener('ended', function() {
+    readBtn.classList.remove('playing');
+    readBtn.innerHTML = '<i class="fas fa-volume-up"></i> برایم بخوان';
+});
+
+// اگر خطایی در پخش رخ داد
+audioPlayer.addEventListener('error', function() {
+    readBtn.classList.remove('playing');
+    readBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> خطا در پخش';
+    readBtn.style.backgroundColor = '#c0392b';
+});
+    </script>
+</body>
+</html>
