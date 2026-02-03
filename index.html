@@ -283,7 +283,31 @@
             </div>
         </div>
     </section>
+<div class="blog-slider">
 
+    <div class="blog-track" id="blogTrack">
+
+        <div class="blog-card">
+            <div class="blog-card-header">
+                <div class="blog-card-logo">BLOG</div>
+                <div class="blog-card-title">وبلاگ</div>
+            </div>
+
+            <div class="blog-card-desc">
+                جدیدترین تحلیل‌ها و ابزارهای هوش مصنوعی برای آینده دیجیتال.
+            </div>
+
+            <a href="#" class="blog-card-link">ورود به مقاله</a>
+        </div>
+
+    </div>
+
+    <div class="blog-nav">
+        <button onclick="prevCard()">‹</button>
+        <button onclick="nextCard()">›</button>
+    </div>
+
+</div>
    
                             
             </div>
@@ -383,6 +407,28 @@
                 navbar.style.padding = '1rem 0';
             }
         });
+
     </script>
+<script>
+let index = 0;
+const track = document.getElementById("blogTrack");
+const total = track.children.length;
+
+function updateSlide() {
+    track.style.transform = `translateX(${index * -100}%)`;
+}
+
+function nextCard() {
+    if(total <= 1) return; // فقط یک کارت هست، کاری نکن
+    index = (index + 1) % total;
+    updateSlide();
+}
+
+function prevCard() {
+    if(total <= 1) return; // فقط یک کارت هست، کاری نکن
+    index = (index - 1 + total) % total;
+    updateSlide();
+}
+</script>
 </body>
 </html>
