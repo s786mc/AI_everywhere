@@ -1,12 +1,12 @@
 @font-face {
-    font-family: 'Mikhak';
-    src: url('https://s786mc.github.io/PvPPacks786/fonts/Mikhak.ttf') format('truetype');
+    font-family: 'Pelak';
+    src: url('https://s786mc.github.io/AI_everywhere/o/pelak.ttf') format('truetype');
 }
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Vazirmatn, system-ui, -apple-system, sans-serif;
+    font-family: 'Pelak','Vazirmatn', system-ui, -apple-system, sans-serif;
 }
 
 :root {
